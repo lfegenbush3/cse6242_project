@@ -4,6 +4,8 @@ import time
 
 import pandas as pd
 import numpy as np
+import requests
+from io import StringIO
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
@@ -51,7 +53,6 @@ class ClusterAPI:
         self.rawUserInput:str = stringInput
         self.userIngredientInput:List[str] = self.cleanUserInput(self.rawUserInput)
         self.pathToModel = pipelineFilePath
-        self.fullDf: pd.DataFrame = pd.read_csv(fullDataFilePath, header=0, sep=',',skipfooter = 1)
         self.pipelineMode:Pipeline = self.getModel(self.pathToModel)
         self.returnRecipeCount: int = topNrRecipes
 
@@ -62,6 +63,16 @@ class ClusterAPI:
         self.edgesDf:pd.DataFrame = None
         self.nodesAndWeights = None
         self.nodeList = None
+
+        #Load file from Google Drive
+        self.fullDf: pd.DataFrame = None pd.read_csv(fullDataFilePath, header=0, sep=',',skipfooter = 1)
+        
+        file_id = fullDataFilePath.split('/')[-2]
+        dwn_url='https://drive.google.com/uc?export=download&id=' + file_id
+        url = requests.get(dwn_url).text
+        csv_raw = StringIO(url)
+        self.fullDf = pd.read_csv(csv_raw)
+       
 
     def cleanUserInput(self, userInputString:str)->List[str]:
         """
