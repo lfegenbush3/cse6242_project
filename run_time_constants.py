@@ -22,6 +22,6 @@ pipelineFilePath = os.path.join(models,"pipeline_k150.sav")
 #  |___data
 #      |______ recipe_clusters.csv
 
-fullDataFilePath = os.path.join(data,"recipe_clusters.csv")
-
+fullDataFilePath = https://drive.google.com/file/d/1c9Cp71KDz9U4yLEA2FksZI9pcPLU3hTk/view?usp=sharing
+  
 #fullDataFilePath = os.path.join(data,"recipe_clusters.csv")
