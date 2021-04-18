@@ -65,7 +65,7 @@ class ClusterAPI:
         self.nodeList = None
 
         #Load file from Google Drive
-        self.fullDf: pd.DataFrame = None pd.read_csv(fullDataFilePath, header=0, sep=',',skipfooter = 1)
+        self.fullDf: pd.DataFrame = None #pd.read_csv(fullDataFilePath, header=0, sep=',',skipfooter = 1)
         
         file_id = fullDataFilePath.split('/')[-2]
         dwn_url='https://drive.google.com/uc?export=download&id=' + file_id
