@@ -70,9 +70,9 @@ class ClusterAPI:
         file_id = fullDataFilePath.split('/')[-2]
         dwn_url='https://drive.google.com/uc?export=download&id=' + file_id
         url = requests.get(dwn_url).text
-        csv_raw = StringIO(url)
-        self.fullDf = pd.read_csv(csv_raw)
-       
+        #csv_raw = StringIO(url)
+        self.fullDf = pd.read_csv(url)
+        print(self.fullDf.head())
 
     def cleanUserInput(self, userInputString:str)->List[str]:
         """
