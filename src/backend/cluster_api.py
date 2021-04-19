@@ -5,7 +5,10 @@ import time
 import pandas as pd
 import numpy as np
 import requests
-from io import StringIO
+from io import BytesIO 
+import io
+import dropbox
+from dropbox.exceptions import ApiError, AuthError
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
@@ -17,7 +20,7 @@ from typing import List,Tuple
 import pickle
 import os
 
-from run_time_constants import data,models,pipelineFilePath, fullDataFilePath
+from run_time_constants import data,models,pipelineFilePath, fullDataFilePath, token
 
 
 
@@ -67,12 +70,12 @@ class ClusterAPI:
         #Load file from Google Drive
         self.fullDf: pd.DataFrame = None #pd.read_csv(fullDataFilePath, header=0, sep=',',skipfooter = 1)
         
-        file_id = fullDataFilePath.split('/')[-2]
-        dwn_url='https://drive.google.com/uc?export=download&id=' + file_id
-        #url = requests.get(dwn_url).text
-        #csv_raw = StringIO(url)
-        self.fullDf = pd.read_csv(dwn_url, header=0, sep=',',skipfooter = 1)
+  
+        url = "https://cse6242project130.s3.amazonaws.com/recipe_clusters.csv"
+        self.fullDf = pd.read_csv(url)
+        
         print(self.fullDf.head())
+
 
     def cleanUserInput(self, userInputString:str)->List[str]:
         """
