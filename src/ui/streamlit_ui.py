@@ -12,7 +12,7 @@ except Exception:
 
 #from SPARQLWrapper import SPARQLWrapper, JSON
 from streamlit_agraph import agraph, Node, Edge, TripleStore, Config
-#from pyvis.network import Network
+from pyvis.network import Network
 
 from ..backend.cluster_api import ClusterAPI
 import matplotlib
@@ -129,24 +129,24 @@ def app():
 
     if runButton:
         st.text("Showing recipes based on the following ingredients: {}".format(userIngredientsInput))
-        try:
-            result = composeClusterApi(userIngredientsInput, userTopNRecipes)
-        except Exception:
-            st.write('The ingredient combination did not yield any results, please try again.')
-            result = None
+        result = composeClusterApi(userIngredientsInput, userTopNRecipes)
+        print('result:' + str(result))
+         #'The ingredient combination did not yield any results, please try again.')
+        #result = None
         session_state.Buttonclicked = True
         session_state2.Buttonclicked = True
         session_state3.Buttonclicked = True
         if result is None:
             status_text.text("The ingredient combination did not yield any results, please try again.")
+            print('here')
         else:
             clusterApi = result
-                    #session_state.name = 'onion'    
+                  
             status_text.text("Perfect, results are displayed in the graph")
-            try:
-                updateGraph(clusterApi,session_state, session_state2, session_state3, sidebar, buttons)
-            except:
-                st.text("The ingredient combination did not yield any results, please try again.")
+            
+            updateGraph(clusterApi,session_state, session_state2, session_state3, sidebar, buttons)
+            
+            st.text("The ingredient combination did not yield any results, please try again.")
                 
 
 
@@ -157,7 +157,8 @@ def updateGraph(clusterApi, session_state, session_state2, session_state3, sideb
     nodesAndWeights = clusterApi.nodesAndWeights
 
     nodes, edges, urlList, orderedNode  = getNodesEdges(recipeDf, edgesDf, nodesAndWeights)
- 
+    print(nodes)
+    print(edges)
     generateGraph(nodes,edges)
 
     col1, col2 = st.beta_columns((3, 3)) #columns for results list
@@ -200,18 +201,18 @@ def composeClusterApi(userIngredientsInput, topNrRecipes):
     if (userIngredientsInput is None) or (userIngredientsInput == ""):
         return None
 
-    try:
-        clusterApi = ClusterAPI(stringInput=userIngredientsInput,
+    #try:
+    clusterApi = ClusterAPI(stringInput=userIngredientsInput,
                                 topNrRecipes=topNrRecipes)
 
-        clusterApi.topRecipeData()
-    except:
-        print('Cluster api failed')
-        raise
-        st.stop()
-        st.warning('An error has occured. Please try again.')
-        return None
-
+    clusterApi.topRecipeData()
+    #except:
+        #print('Cluster api failed')
+        #raise
+        #st.stop()
+        #st.warning('An error has occured. Please try again.')
+        #return None
+    print(clusterApi)
     return clusterApi
     
 
