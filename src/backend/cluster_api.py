@@ -51,7 +51,7 @@ class ClusterAPI:
         self.rawUserInput:str = stringInput
         self.userIngredientInput:List[str] = self.cleanUserInput(self.rawUserInput)
         self.pathToModel = pipelineFilePath
-        self.fullDf: pd.DataFrame = pd.read_csv(fullDataFilePath, header=0, sep=',')
+        #self.fullDf: pd.DataFrame = pd.read_csv(fullDataFilePath, header=0, sep=',')
         self.pipelineMode:Pipeline = self.getModel(self.pathToModel)
         self.returnRecipeCount: int = topNrRecipes
 
@@ -63,6 +63,13 @@ class ClusterAPI:
         self.nodesAndWeights = None
         self.nodeList = None
 
+        self.fullDf: pd.DataFrame = None #pd.read_csv(fullDataFilePath, header=0, sep=',',skipfooter = 1)
+        
+        url = "https://cse6242project130.s3.amazonaws.com/recipe_clusters.csv"
+        self.fullDf = pd.read_csv(url)
+        
+
+        
     def cleanUserInput(self, userInputString:str)->List[str]:
         """
         :param userInputString: a string that user input into the webinterface passed to backend
