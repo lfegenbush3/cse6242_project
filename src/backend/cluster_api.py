@@ -64,11 +64,13 @@ class ClusterAPI:
         self.nodeList = None
 
         self.fullDf: pd.DataFrame = None #pd.read_csv(fullDataFilePath, header=0, sep=',',skipfooter = 1)
-        
+                
         url = "https://cse6242project130.s3.amazonaws.com/recipe_clusters.csv"
+        print(url)
         self.fullDf = pd.read_csv(url)
-        
-
+            
+        print(self.fullDf.head())
+      
         
     def cleanUserInput(self, userInputString:str)->List[str]:
         """
@@ -281,16 +283,17 @@ class ClusterAPI:
 
         newRecipe = self.userIngredientInput
         returnRecipeCount = self.returnRecipeCount
-
+        print(newRecipe)
+        print(returnRecipeCount)
         clusterNr = self.predictCluster(model, newRecipe)
-
+        print(clusterNr)
         self.getClusterData(clusterNr)
-
+        
         dfTop = self.getClusterTopData(returnRecipeCount)
         self.setNodeSizes(dfTop)
         edgesDf = self.getEdgesDf(dfTop)
-
-
+        print(dfTop)
+        print(edgesDf)
         return dfTop,edgesDf,clusterNr
 
     def updateRecipeData(self,returnRecipeCount:int = None)->Tuple[pd.DataFrame,pd.DataFrame]:
