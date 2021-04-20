@@ -12,7 +12,7 @@ except Exception:
 
 #from SPARQLWrapper import SPARQLWrapper, JSON
 from streamlit_agraph import agraph, Node, Edge, TripleStore, Config
-from pyvis.network import Network
+#from pyvis.network import Network
 
 from ..backend.cluster_api import ClusterAPI
 import matplotlib
