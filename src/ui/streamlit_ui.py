@@ -45,7 +45,7 @@ def app():
     sidebar = st.sidebar
     sidebar.title("Enter ingredients or any food related words")
     sidebar.markdown(""
-                     "1. Enter ingredients to search for similar recipes.<br/> "
+                     "<br>1. Enter ingredients to search for similar recipes.<br/> "
                      "2. Next select the number of recipes you would like returned.<br/>"
                      "3. Click Run. <br /> "
                      "NOTE: A network of recipes to explore will appear below. "
